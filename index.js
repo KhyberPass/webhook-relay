@@ -49,7 +49,19 @@ app.post('/', function (req, res) {
 
   console.log('Received', body);
   //console.log('Data', body.msg.type);
-
+  
+  // Check the received data to ensure that it is correct
+  // it should have a .type and .cmd
+  // var y = obj.hasOwnProperty("name");
+  if (!("type" in body)) {
+    console.log('Invalid data: key type missing');
+    return;
+  }
+  if (!("cmd" in body)) {
+    console.log('Invalid data: key cmd missing');
+    return;
+  }
+    
   // Send the post out
 
   // A Google Assistant turn on POST
@@ -57,20 +69,27 @@ app.post('/', function (req, res) {
     // Get the data
     var cmd = body.cmd.replace('the ','').toLowerCase();
 
-    if (cmd == 'tv on') {
-      sendUrl(LIRC_URL + 'remotes/sony/KEY_POWER');
-    }
-    if (cmd == 'tv off') {
-      sendUrl(LIRC_URL + 'remotes/sony/KEY_POWER');
-    }
-    if (cmd == 'radio off') {
-      sendUrl(LIRC_URL + 'remotes/pana/KEY_POWER');
-    }
-    if (cmd == 'fan on') {
-      sendUrl(PSW_URL + 'cm?cmnd=Power%20On');
-    }
-    if (cmd == 'fan off') {
-      sendUrl(PSW_URL + 'cm?cmnd=Power%20Off');
+    switch(cmd) {
+      case 'tv on':
+      case 'tv off':
+        sendUrl(LIRC_URL + 'remotes/sony/KEY_POWER');
+        break;
+
+      case 'radio off':
+      case 'radio on':
+        sendUrl(LIRC_URL + 'remotes/pana/KEY_POWER');
+        break;
+
+      case 'fan on':
+        sendUrl(PSW_URL + 'cm?cmnd=Power%20On');
+        break;
+
+      case 'fan off':
+        sendUrl(PSW_URL + 'cm?cmnd=Power%20Off');
+        break;
+       
+      default:
+        console.log('Invalid data: command not found', cmd);
     }
   }
 
