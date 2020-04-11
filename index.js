@@ -21,7 +21,11 @@ function sendUrl(url) {
   };
   console.log(url);
   request.post(options, function (error, response) {
-    console.log(error, response.body);
+    if (err) {
+      console.log(error);
+      return;
+    }
+    console.log(response.body);
     return;
   });
 }
