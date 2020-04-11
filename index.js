@@ -21,7 +21,7 @@ function sendUrl(url) {
   };
   console.log(url);
   request.post(options, function (error, response) {
-    if (err) {
+    if (error) {
       console.log(error);
       return;
     }
