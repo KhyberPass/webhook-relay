@@ -81,7 +81,24 @@ app.post('/', function (req, res) {
 
       case 'radio off':
       case 'radio on':
+      case 'kitchen off':
+      case 'kitchen on':
         sendUrl(LIRC_URL + 'remotes/pana/KEY_POWER');
+        break;
+
+      case 'radio volume default':
+      case 'kitchen volume default':
+        sendUrl(LIRC_URL + 'macros/Radio%20Volume%20Default');
+        break;
+
+      case 'radio volume up':
+      case 'kitchen volume up':
+        sendUrl(LIRC_URL + 'remotes/pana/KEY_VOLUMEUP/repeat/5');
+        break;
+
+      case 'radio volume down':
+      case 'kitchen volume down':
+        sendUrl(LIRC_URL + 'remotes/pana/KEY_VOLUMEDOWN/repeat/5');
         break;
 
       case 'fan on':
